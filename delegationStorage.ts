@@ -1,10 +1,10 @@
 import type { Hex } from "viem";
-import type { DelegationStruct } from "@metamask-private/delegator-core-viem";
+import type { DelegationStruct } from "@metamask/delegation-toolkit";
 import {
   DelegationStorageClient,
   DelegationStoreFilter,
   DelegationStorageEnvironment,
-} from "@metamask-private/delegator-core-viem";
+} from "@metamask/delegation-toolkit";
 
 let instance: DelegationStorageClient | null = null;
 

@@ -1,7 +1,7 @@
 import type {
   Implementation,
   MetaMaskSmartAccount,
-} from "@metamask-private/delegator-core-viem";
+} from "@metamask/delegation-toolkit";
 import { lineaSepolia as chain } from "viem/chains";
 import { createPimlicoClient } from "permissionless/clients/pimlico";
 import {

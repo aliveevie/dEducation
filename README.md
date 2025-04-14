@@ -226,7 +226,7 @@ Please ensure your code follows the project's coding standards and includes appr
 
 ## 🙏 Acknowledgements
 
-- [MetaMask](https://metamask.io/) for their Delegation Toolkit.
+- [MetaMask Delegation Toolkit](https://docs.gator.metamask.io/) for their Delegation Toolkit.
 - [Gaia](https://gaianet.ai/) for their AI platform
 - [Next.js](https://nextjs.org/) for the React framework
 - [Vercel AI SDK](https://sdk.vercel.ai/) for The AI Toolkit for TypeScript

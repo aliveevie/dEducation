@@ -12,7 +12,7 @@ import {
   getDelegationHashOffchain,
   type MetaMaskSmartAccount,
   type DelegationStruct,
-} from "@metamask-private/delegator-core-viem";
+} from "@metamask/delegation-toolkit";
 import { createWalletClient, custom, toHex, zeroAddress } from "viem";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 import { randomBytes } from "crypto";
@@ -20,7 +20,7 @@ import { FACTORY_CONTRACT_ADDRESS, CREATE_TOKEN_SELECTOR } from "@/constants";
 import {
   DelegationStorageClient,
   DelegationStorageEnvironment,
-} from "@metamask-private/delegator-core-viem";
+} from "@metamask/delegation-toolkit";
 
 import { Chat } from "./Chat";
 import { bundler, pimlicoClient } from "@/lib/services/bundler";

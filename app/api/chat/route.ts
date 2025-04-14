@@ -3,18 +3,18 @@ import { streamText, tool } from "ai";
 import type {
   ExecutionMode,
   ExecutionStruct,
-} from "@metamask-private/delegator-core-viem";
+} from "@metamask/delegation-toolkit";
 import {
   DelegationStoreFilter,
   DelegationFramework,
   SINGLE_DEFAULT_MODE,
-} from "@metamask-private/delegator-core-viem";
+} from "@metamask/delegation-toolkit";
 import { z } from "zod";
 import { encodeFunctionData } from "viem";
 import {
   Implementation,
   toMetaMaskSmartAccount,
-} from "@metamask-private/delegator-core-viem";
+} from "@metamask/delegation-toolkit";
 import { publicClient } from "@/wagmi.config";
 import { privateKeyToAccount } from "viem/accounts";
 import { bundler, pimlicoClient } from "@/lib/services/bundler";

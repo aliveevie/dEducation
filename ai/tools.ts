@@ -3,21 +3,21 @@ import type {
   DelegationStruct,
   ExecutionMode,
   ExecutionStruct,
-} from "@metamask-private/delegator-core-viem";
+} from "@metamask/delegation-toolkit";
 import {
   DelegationStorageClient,
   DelegationStoreFilter,
   DelegationStorageEnvironment,
   DelegationFramework,
   SINGLE_DEFAULT_MODE,
-} from "@metamask-private/delegator-core-viem";
+} from "@metamask/delegation-toolkit";
 import { tool as createTool } from "ai";
 import { z } from "zod";
 import { encodeFunctionData } from "viem";
 import {
   Implementation,
   toMetaMaskSmartAccount,
-} from "@metamask-private/delegator-core-viem";
+} from "@metamask/delegation-toolkit";
 import { publicClient } from "@/wagmi.config";
 import { privateKeyToAccount } from "viem/accounts";
 import { bundler, pimlicoClient } from "@/lib/services/bundler";

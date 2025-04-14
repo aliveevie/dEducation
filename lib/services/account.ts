@@ -3,7 +3,7 @@ import { sendUserOp } from "./bundler";
 import {
   MetaMaskSmartAccount,
   Implementation,
-} from "@metamask-private/delegator-core-viem";
+} from "@metamask/delegation-toolkit";
 
 export async function deploySmartAccount(
   smartAccount: MetaMaskSmartAccount<Implementation.Hybrid>

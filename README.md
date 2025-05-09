@@ -14,9 +14,12 @@ The starter includes a full ERC20 token creation system through an integrated fa
 - **AI-Powered Learning**: Utilize Gaia's AI to get personalized explanations and assistance
 - **Interactive Course Modules**: Engage with educational content through an intuitive interface
 - **Progress Tracking**: Track your learning progress across different courses and modules
+- **Certificate Generation**: Earn and download certificates upon course completion
+- **Learning Dashboard**: View your enrolled courses, progress, and earned certificates
 - **ERC20 Token Creation**: Create custom ERC20 tokens through the integrated factory contract
 - **Secure Blockchain Integration**: Connect with the Ethereum ecosystem through MetaMask's trusted wallet infrastructure
 - **Delegation Management**: MetaMask's Delegation Toolkit for managing user-to-AI agent delegations
+- **Robust Error Handling**: Comprehensive error handling system for improved reliability
 - **Modern UI Components**: Sleek, responsive interface with dark mode support
 - **Next.js App Router**: Built on Next.js with the modern App Router architecture
 - **TypeScript Support**: Full TypeScript integration for type safety and better developer experience
@@ -90,19 +93,26 @@ pnpm dev
 │   └── tools.ts       # AI tools implementation
 ├── app/               # Next.js App Router 
 │   ├── api/           # API routes
+│   │   └── gaia/      # Gaia API proxy routes
 │   ├── chat/          # AI chat interface
 │   │   └── page.tsx   # Chat page component
+│   ├── dashboard/     # User dashboard
+│   │   └── page.tsx   # Dashboard page component
 │   ├── education/     # Education platform
 │   │   └── page.tsx   # Education page component
 │   ├── globals.css    # Global styles
 │   ├── layout.tsx     # Root layout component
 │   └── page.tsx       # Home page component
 ├── components/        # Reusable UI components
+│   ├── Certificate.tsx # Certificate component
+│   ├── EducationHub.tsx # Education hub component
+│   ├── Navigation.tsx  # Navigation component
 │   ├── ui/            # Basic UI components
 │   │   ├── badge.tsx  # Badge component
 │   │   ├── button.tsx # Button component
 │   │   ├── card.tsx   # Card component
-│   │   └── input.tsx  # Input component
+│   │   ├── input.tsx  # Input component
+│   │   └── tabs.tsx   # Tabs component
 │   ├── Chat.tsx       # Chat interface component
 │   ├── DelegationManager.tsx # Delegation management component
 │   ├── EducationHub.tsx # Education platform component
@@ -111,6 +121,7 @@ pnpm dev
 ├── lib/               # Utility functions and libraries
 │   └── services/      # API services
 │       ├── bundler.ts # Bundler service implementation
+│       ├── errorHandler.ts # Error handling service
 │       └── gaia.ts    # Gaia API integration service
 ├── public/            # Static assets
 │   ├── file.svg       # File icon

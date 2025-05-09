@@ -123,7 +123,7 @@ export class GaiaService {
    * @param options Chat completion options
    * @returns AsyncGenerator that yields chunks of the response
    */
-  async *createStreamingChatCompletion(options: ChatCompletionOptions): AsyncGenerator<any, void, unknown> {
+  createStreamingChatCompletion = async function*(this: GaiaService, options: ChatCompletionOptions): AsyncGenerator<any, void, unknown> {
     try {
       // Use our local API proxy to avoid CORS issues
       const response = await fetch('/api/gaia/stream', {
@@ -142,7 +142,12 @@ export class GaiaService {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(`Gaia API Error: ${response.status} - ${JSON.stringify(errorData)}`);
+        const error = new Error(`Gaia API Error: ${response.status} - ${JSON.stringify(errorData)}`);
+        // Add additional properties to help with error categorization
+        (error as any).status = response.status;
+        (error as any).statusText = response.statusText;
+        (error as any).details = errorData;
+        throw error;
       }
 
       if (!response.body) {
@@ -153,34 +158,57 @@ export class GaiaService {
       const decoder = new TextDecoder('utf-8');
       let buffer = '';
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        
-        buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split('\n');
-        
-        buffer = lines.pop() || '';
-        
-        for (const line of lines) {
-          const trimmedLine = line.trim();
-          if (trimmedLine === '') continue;
-          if (trimmedLine === 'data: [DONE]') return;
+      try {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
           
-          if (trimmedLine.startsWith('data: ')) {
-            const jsonStr = trimmedLine.slice(6);
-            try {
-              const json = JSON.parse(jsonStr);
-              yield json;
-            } catch (e) {
-              console.error('Error parsing JSON from stream:', e);
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          
+          buffer = lines.pop() || '';
+          
+          for (const line of lines) {
+            const trimmedLine = line.trim();
+            if (trimmedLine === '') continue;
+            if (trimmedLine === 'data: [DONE]') return;
+            
+            if (trimmedLine.startsWith('data: ')) {
+              const jsonStr = trimmedLine.slice(6);
+              try {
+                const json = JSON.parse(jsonStr);
+                yield json;
+              } catch (e) {
+                const parseError = new Error('Error parsing JSON from stream');
+                (parseError as any).originalError = e;
+                (parseError as any).jsonString = jsonStr;
+                ErrorHandler.handleError(parseError, {
+                  service: 'GaiaService',
+                  method: 'createStreamingChatCompletion',
+                  context: 'JSON parsing'
+                });
+              }
             }
           }
         }
+      } catch (streamError) {
+        const error = new Error('Error reading stream');
+        (error as any).originalError = streamError;
+        throw error;
       }
     } catch (error) {
-      console.error('Error in streaming chat completion:', error);
-      throw error;
+      // Create a more user-friendly error message
+      const errorInfo = ErrorHandler.handleError(error, {
+        service: 'GaiaService',
+        method: 'createStreamingChatCompletion',
+        options
+      });
+      
+      // Rethrow with additional context
+      const enhancedError = new Error(ErrorHandler.formatErrorForUser(errorInfo));
+      (enhancedError as any).originalError = error;
+      (enhancedError as any).errorInfo = errorInfo;
+      throw enhancedError;
     }
   }
 

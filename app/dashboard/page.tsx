@@ -5,6 +5,7 @@ import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Certificate } from "@/components/Certificate";
 import { useAccount } from "wagmi";
 import Link from "next/link";
 import { BookOpen, GraduationCap, Award, Brain, ArrowRight, BarChart3, Clock, Trophy } from "lucide-react";
@@ -26,10 +27,21 @@ interface Certificate {
   recipient: string;
 }
 
+interface Course {
+  id: string;
+  title: string;
+}
+
+interface UserProgress {
+  enrolledCourses: Course[];
+  certificates: Certificate[];
+}
+
 export default function DashboardPage() {
   const { isConnected, address } = useAccount();
   const [courseProgress, setCourseProgress] = useState<CourseProgress[]>([]);
   const [certificates, setCertificates] = useState<Certificate[]>([]);
+  const [selectedCertificate, setSelectedCertificate] = useState<Certificate | null>(null);
   const [loading, setLoading] = useState(true);
 
   // Load user's course progress and certificates from localStorage
@@ -354,13 +366,28 @@ export default function DashboardPage() {
                       </div>
                     </CardContent>
                     <CardFooter>
-                      <Button variant="outline" className="w-full">
+                      <Button 
+                        variant="outline" 
+                        className="w-full"
+                        onClick={() => setSelectedCertificate(certificate)}
+                      >
                         View Certificate
                       </Button>
                     </CardFooter>
                   </Card>
                 ))}
               </div>
+            )}
+            
+            {/* Certificate Modal */}
+            {selectedCertificate && (
+              <Certificate
+                id={selectedCertificate.id}
+                courseTitle={selectedCertificate.courseTitle}
+                recipient={selectedCertificate.recipient}
+                issueDate={selectedCertificate.issueDate}
+                onClose={() => setSelectedCertificate(null)}
+              />
             )}
           </>
         )}

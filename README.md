@@ -4,10 +4,6 @@
 
 The Decentralized Education Platform is a comprehensive learning system built on Web3 technologies that seamlessly integrates Gaia's advanced AI capabilities with MetaMask's Delegation Toolkit (DTK). This platform enables users to access educational content about blockchain, Web3, and cryptocurrency while leveraging the security and ownership benefits of decentralized technologies.
 
-![Gaia Delegation Toolkit Gif](./gaia-dtk-2.gif)
-
-The starter includes a full ERC20 token creation system through an integrated factory contract, allowing users to deploy custom tokens directly through the application. Combined with AI-powered interactions, this creates a powerful platform for building next-generation decentralized applications.
-
 ## ✨ Features
 
 - **Educational Content**: Access structured courses on blockchain, Web3, and cryptocurrency topics

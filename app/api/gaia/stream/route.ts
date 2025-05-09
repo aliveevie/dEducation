@@ -33,7 +33,17 @@ export async function POST(request: NextRequest) {
 
     // Check if the request was successful
     if (!response.ok) {
-      const errorData = await response.json();
+      let errorData;
+      const responseText = await response.text();
+      
+      try {
+        // Try to parse the error response as JSON
+        errorData = JSON.parse(responseText);
+      } catch (parseError) {
+        // If parsing fails, use the response text instead
+        errorData = { rawError: responseText || 'No error details available' };
+      }
+      
       return new Response(
         JSON.stringify({ error: `Gaia API Error: ${response.status}`, details: errorData }),
         { status: response.status, headers: { 'Content-Type': 'application/json' } }

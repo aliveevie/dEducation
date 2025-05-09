@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useAccount, useConnect, useDisconnect } from "wagmi";
-import { BookOpen, Home, Wallet, Brain, Menu, X } from "lucide-react";
+import { BookOpen, Home, Wallet, Brain, Menu, X, BarChart3 } from "lucide-react";
 
 const ConnectButton = () => {
   const { connectors, connect } = useConnect();
@@ -44,6 +44,7 @@ export function Navigation() {
   const navItems = [
     { name: "Home", href: "/", icon: <Home className="h-4 w-4 mr-2" /> },
     { name: "Education", href: "/education", icon: <BookOpen className="h-4 w-4 mr-2" /> },
+    { name: "Dashboard", href: "/dashboard", icon: <BarChart3 className="h-4 w-4 mr-2" /> },
     { name: "AI Chat", href: "/chat", icon: <Brain className="h-4 w-4 mr-2" /> },
   ];
 

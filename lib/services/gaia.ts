@@ -5,6 +5,8 @@
  * in the decentralized education platform.
  */
 
+import { ErrorHandler, ErrorType, withErrorHandling } from './errorHandler';
+
 // Default API endpoint for Gaia
 const GAIA_MODEL_BASE_URL = process.env.GAIA_MODEL_BASE_URL || 'https://api.gaianet.ai/v1';
 const GAIA_API_KEY = process.env.GAIA_API_KEY;
@@ -68,17 +70,17 @@ export class GaiaService {
   }
 
   /**
-   * Send a chat completion request to the Gaia API
+   * Send a chat completion request to the Gaia API through our local API proxy
    * @param options Chat completion options
    * @returns Promise with the chat completion response
    */
-  async createChatCompletion(options: ChatCompletionOptions): Promise<ChatCompletionResponse> {
+  createChatCompletion = withErrorHandling(async (options: ChatCompletionOptions): Promise<ChatCompletionResponse> => {
     try {
-      const response = await fetch(`${this.baseUrl}/chat/completions`, {
+      // Use our local API proxy to avoid CORS issues
+      const response = await fetch('/api/gaia', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.apiKey}`
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           messages: options.messages,
@@ -91,28 +93,43 @@ export class GaiaService {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(`Gaia API Error: ${response.status} - ${JSON.stringify(errorData)}`);
+        const error = new Error(`Gaia API Error: ${response.status} - ${JSON.stringify(errorData)}`);
+        // Add additional properties to help with error categorization
+        (error as any).status = response.status;
+        (error as any).statusText = response.statusText;
+        (error as any).details = errorData;
+        throw error;
       }
 
       return await response.json();
     } catch (error) {
-      console.error('Error calling Gaia API:', error);
-      throw error;
+      // Create a more user-friendly error message
+      const errorInfo = ErrorHandler.handleError(error, {
+        service: 'GaiaService',
+        method: 'createChatCompletion',
+        options
+      });
+      
+      // Rethrow with additional context
+      const enhancedError = new Error(ErrorHandler.formatErrorForUser(errorInfo));
+      (enhancedError as any).originalError = error;
+      (enhancedError as any).errorInfo = errorInfo;
+      throw enhancedError;
     }
-  }
+  }, { service: 'GaiaService' });
 
   /**
-   * Create a streaming chat completion
+   * Create a streaming chat completion through our local API proxy
    * @param options Chat completion options
    * @returns AsyncGenerator that yields chunks of the response
    */
   async *createStreamingChatCompletion(options: ChatCompletionOptions): AsyncGenerator<any, void, unknown> {
     try {
-      const response = await fetch(`${this.baseUrl}/chat/completions`, {
+      // Use our local API proxy to avoid CORS issues
+      const response = await fetch('/api/gaia/stream', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.apiKey}`
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           messages: options.messages,

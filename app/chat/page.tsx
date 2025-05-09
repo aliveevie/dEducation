@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { gaiaService } from "@/lib/services/gaia";
+import { createSystemMessage, createUserMessage } from "@/lib/utils";
 import { useAccount } from "wagmi";
 import { Loader2, Send, Brain } from "lucide-react";
 
@@ -87,9 +88,12 @@ Always be concise, accurate, and educational in your responses. Use simple analo
 
       // Prepare messages for API call
       const apiMessages = [
-        { role: 'system', content: systemPrompt },
-        ...messages.filter(m => m.role !== 'system').map(m => ({ role: m.role, content: m.content })),
-        { role: 'user', content: input }
+        createSystemMessage(systemPrompt),
+        ...messages.filter(m => m.role !== 'system').map(m => ({ 
+          role: m.role as 'user' | 'assistant' | 'system', 
+          content: m.content 
+        })),
+        createUserMessage(input)
       ];
 
       const response = await gaiaService.createChatCompletion({

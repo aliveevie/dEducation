@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { gaiaService } from "@/lib/services/gaia";
+import { createSystemMessage, createUserMessage } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, BookOpen, GraduationCap, Award, Brain } from "lucide-react";
 
@@ -195,14 +196,8 @@ Content: ${selectedModule.content}
 
       const response = await gaiaService.createChatCompletion({
         messages: [
-          { 
-            role: "system", 
-            content: "You are an educational AI assistant for a decentralized education platform. Your goal is to help users understand blockchain, Web3, and related concepts. Be concise, accurate, and helpful. When explaining complex topics, use simple analogies where appropriate." 
-          },
-          { 
-            role: "user", 
-            content: `Context: ${context}\n\nQuestion: ${question}` 
-          }
+          createSystemMessage("You are an educational AI assistant for a decentralized education platform. Your goal is to help users understand blockchain, Web3, and related concepts. Be concise, accurate, and helpful. When explaining complex topics, use simple analogies where appropriate."),
+          createUserMessage(`Context: ${context}\n\nQuestion: ${question}`)
         ],
         temperature: 0.7
       });
@@ -435,7 +430,7 @@ Content: ${selectedModule.content}
                           <span>{module.title}</span>
                         </div>
                         {module.completed && (
-                          <Badge variant="success" className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
+                          <Badge variant="outline" className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
                             Completed
                           </Badge>
                         )}

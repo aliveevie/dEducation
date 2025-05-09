@@ -1,8 +1,8 @@
-# MetaMask Gaia DTK Starter
+# Decentralized Education Platform with MetaMask & Gaia
 
 ## 🌟 Overview
 
-The MetaMask Gaia DTK Starter is a powerful Next.js template that seamlessly integrates Gaia's advanced capabilities with MetaMask's Develegation Toolkit (DTK). This project allows developers to build sophisticated blockchain applications with AI-enhanced functionalities while leveraging MetaMask's secure wallet infrastructure.
+The Decentralized Education Platform is a comprehensive learning system built on Web3 technologies that seamlessly integrates Gaia's advanced AI capabilities with MetaMask's Delegation Toolkit (DTK). This platform enables users to access educational content about blockchain, Web3, and cryptocurrency while leveraging the security and ownership benefits of decentralized technologies.
 
 ![Gaia Delegation Toolkit Gif](./gaia-dtk-2.gif)
 
@@ -10,13 +10,15 @@ The starter includes a full ERC20 token creation system through an integrated fa
 
 ## ✨ Features
 
-- **AI-Powered Interactions**: Utilize GaiaNet AI to create intelligent and responsive dApp experiences
+- **Educational Content**: Access structured courses on blockchain, Web3, and cryptocurrency topics
+- **AI-Powered Learning**: Utilize Gaia's AI to get personalized explanations and assistance
+- **Interactive Course Modules**: Engage with educational content through an intuitive interface
+- **Progress Tracking**: Track your learning progress across different courses and modules
 - **ERC20 Token Creation**: Create custom ERC20 tokens through the integrated factory contract
 - **Secure Blockchain Integration**: Connect with the Ethereum ecosystem through MetaMask's trusted wallet infrastructure
-- **Delegation Management**: Metamask's Delegation Toolkit for managing user-to-AI agent delegations
-- **Bundler Service Integration**: Pre-configured connection to bundler services for transaction handling
-- **Modern UI Components**: Ready-made UI components including chat interfaces, cards, and inputs
-- **Next.js App Router**: Built on Next.js 13+ with the new App Router architecture
+- **Delegation Management**: MetaMask's Delegation Toolkit for managing user-to-AI agent delegations
+- **Modern UI Components**: Sleek, responsive interface with dark mode support
+- **Next.js App Router**: Built on Next.js with the modern App Router architecture
 - **TypeScript Support**: Full TypeScript integration for type safety and better developer experience
 
 ## 🚀 Getting Started
@@ -88,6 +90,10 @@ pnpm dev
 │   └── tools.ts       # AI tools implementation
 ├── app/               # Next.js App Router 
 │   ├── api/           # API routes
+│   ├── chat/          # AI chat interface
+│   │   └── page.tsx   # Chat page component
+│   ├── education/     # Education platform
+│   │   └── page.tsx   # Education page component
 │   ├── globals.css    # Global styles
 │   ├── layout.tsx     # Root layout component
 │   └── page.tsx       # Home page component
@@ -99,12 +105,13 @@ pnpm dev
 │   │   └── input.tsx  # Input component
 │   ├── Chat.tsx       # Chat interface component
 │   ├── DelegationManager.tsx # Delegation management component
-│   └── Message.tsx    # Message component
+│   ├── EducationHub.tsx # Education platform component
+│   ├── Message.tsx    # Message component
+│   └── Navigation.tsx # Navigation component
 ├── lib/               # Utility functions and libraries
-├── services/          # API services
-│   ├── account.ts     # Account-related services
-│   ├── bundler.ts     # Bundler service implementation
-│   └── utils.ts       # Service utilities
+│   └── services/      # API services
+│       ├── bundler.ts # Bundler service implementation
+│       └── gaia.ts    # Gaia API integration service
 ├── public/            # Static assets
 │   ├── file.svg       # File icon
 │   ├── globe.svg      # Globe icon
@@ -185,10 +192,24 @@ erc20-factory/
 
 ### Gaia Integration
 
-1. Sign up for an API key ober [here](https://gaianet.ai)
+1. Sign up for an API key over at [Gaia](https://gaianet.ai)
 2. Add your API key to the `.env` file under `GAIA_API_KEY`
 3. Set the model base URL in the `.env` file under `GAIA_MODEL_BASE_URL`
-4. Use the pre-configured AI tools in `ai/tools.ts` to interact with GaiaNet features
+4. Use the pre-configured AI tools in `ai/tools.ts` to interact with Gaia features
+
+#### Gaia in the Education Platform
+
+The decentralized education platform leverages Gaia's AI capabilities in several key ways:
+
+1. **AI-Powered Learning Assistant**: The platform includes a dedicated chat interface where students can ask questions about blockchain, Web3, and cryptocurrency concepts. The AI assistant provides educational responses tailored to the user's level of understanding.
+
+2. **Course Content Enhancement**: Within each course module, students can ask specific questions about the content they're learning. The AI provides additional explanations, examples, and clarifications to enhance the learning experience.
+
+3. **Personalized Learning**: The AI adapts to each student's learning style and pace, providing customized explanations and recommendations for further study.
+
+4. **Knowledge Verification**: Students can test their understanding by asking the AI assistant to quiz them on concepts they've learned, providing immediate feedback and correction.
+
+The Gaia integration is implemented through the `lib/services/gaia.ts` service, which provides a clean API for interacting with Gaia's AI capabilities throughout the application.
 
 ### Bundler Service Configuration
 

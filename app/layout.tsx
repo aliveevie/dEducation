@@ -15,6 +15,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const metadata = {
+  title: 'Decentralized Education Platform',
+  description: 'Learn Web3, blockchain, and succeed in the decentralized world',
+};
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -29,7 +34,11 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Provider initialState={initialState}>{children}</Provider>
+        <Provider initialState={initialState}>
+          <div className="flex flex-col min-h-screen">
+            {children}
+          </div>
+        </Provider>
       </body>
     </html>
   );

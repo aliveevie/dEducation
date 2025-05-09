@@ -37,13 +37,13 @@ The starter includes a full ERC20 token creation system through an integrated fa
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/meowyx/metamask-gaia-starter.git
+git clone https://github.com/aliveevie/dEducation.git
 ```
 
 2. Navigate to the project directory:
 
-```bash
-cd metamask-gaia-starter
+```ash
+cd dEducation
 ```
 
 3. Install dependencies using pnpm:
